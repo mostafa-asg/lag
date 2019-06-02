@@ -107,12 +107,12 @@ func renderLineChart(ctx context.Context, lc *linechart.LineChart, delay time.Du
 				}
 			}
 			lags = append(lags, lag)
+			if len(lags) > 30 {
+				lags = lags[1:]
+			}
 
 			if err := lc.Series("first", lags,
 				linechart.SeriesCellOpts(cell.FgColor(cell.ColorBlue)),
-				linechart.SeriesXLabels(map[int]string{
-					0: "zero",
-				}),
 			); err != nil {
 				panic(err)
 			}
