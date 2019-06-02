@@ -20,6 +20,7 @@ import (
 type topicPartitions map[string][]int32
 
 var brokersAddress, topic, consumerGroup string
+var window int
 var lags []float64
 
 func ensureNotError(err error) {
@@ -107,7 +108,7 @@ func renderLineChart(ctx context.Context, lc *linechart.LineChart, delay time.Du
 				}
 			}
 			lags = append(lags, lag)
-			if len(lags) > 30 {
+			if len(lags) > window {
 				lags = lags[1:]
 			}
 
@@ -128,6 +129,7 @@ func main() {
 	flag.StringVar(&brokersAddress, "brokers", "localhost:9092", "The server(s) to connect to")
 	flag.StringVar(&topic, "topic", "", "Topic name")
 	flag.StringVar(&consumerGroup, "group", "", "The consumer group name")
+	flag.IntVar(&window, "window", 30, "The window size in seconds. Default is 30 seconds which means you only see LAG for past 30 seconds")
 	flag.Parse()
 	lags = make([]float64, 1)
 	lags[0] = 0
