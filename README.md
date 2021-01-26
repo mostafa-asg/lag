@@ -1,5 +1,5 @@
 # lag
-Monitor Kafka lag on terminal  
+Monitor Kafka lag in terminal  
 ## how to run
 ```
 go run main.go --brokers {BROKERS1,BROKERS2} --topic {TOPIC} --group {CONSUMER_GROUP}
